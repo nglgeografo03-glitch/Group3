@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Set Operator Visualizer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      color: white;
+      margin-top: 20px;
+    }
+
+    .container {
+      background: white;
+      width: 80%;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    input {
+      width: 40%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 5px #667eea;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background: #667eea;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #5a67d8;
+      transform: scale(1.05);
+    }
+
+    .sets {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .box {
+      width: 180px;
+      min-height: 120px;
+      border-radius: 12px;
+      margin: 10px;
+      padding: 15px;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    #boxA { background: #ff9a9e; color: white; }
+    #boxB { background: #6a11cb; color: white; }
+    #result { background: #11998e; color: white; }
+
+    footer {
+      margin-top: 20px;
+      color: white;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>✨ Set Operator Visualizer ✨</h2>
+
+  <div class="container">
+
+    <input type="text" id="setA" placeholder="Enter Set A (e.g. 1,2,3)">
+    <input type="text" id="setB" placeholder="Enter Set B (e.g. 2,3,4)"><br>
+
+    <button onclick="union()">Union (A ∪ B)</button>
+    <button onclick="intersection()">Intersection (A ∩ B)</button>
+    <button onclick="difference()">Difference (A − B)</button>
+
+    <div class="sets">
+      <div class="box" id="boxA">Set A</div>
+      <div class="box" id="boxB">Set B</div>
+      <div class="box" id="result">Result</div>
+    </div>
+
+  </div>
+
+  <footer>
+    DISCRETE STRUCTURE || GROUP 3 
+  </footer>
+
+<script>
+function getSet(inputId) {
+  return document.getElementById(inputId).value
+    .split(',')
+    .map(x => x.trim())
+    .filter(x => x !== '');
+}
+
+function display(set, elementId) {
+  document.getElementById(elementId).innerText = '{ ' + set.join(', ') + ' }';
+}
+
+function union() {
+  let A = getSet('setA');
+  let B = getSet('setB');
+  let result = [...new Set([...A, ...B])];
+  display(A, 'boxA');
+  display(B, 'boxB');
+  display(result, 'result');
+}
+
+function intersection() {
+  let A = getSet('setA');
+  let B = getSet('setB');
+  let result = A.filter(x => B.includes(x));
+  display(A, 'boxA');
+  display(B, 'boxB');
+  display(result, 'result');
+}
+
+function difference() {
+  let A = getSet('setA');
+  let B = getSet('setB');
+  let result = A.filter(x => !B.includes(x));
+  display(A, 'boxA');
+  display(B, 'boxB');
+  display(result, 'result');
+}
+</script>
+
+</body>
+</html>
